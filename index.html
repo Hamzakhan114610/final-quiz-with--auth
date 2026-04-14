@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Quiz App</title>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #f4f7f6; margin: 0; }
+        .box { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); width: 320px; text-align: center; }
+        h2 { color: #333; margin-bottom: 20px; }
+        input { display: block; width: 100%; margin-bottom: 15px; padding: 12px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; background-color: #007bff; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: 600; }
+        button:hover { background-color: #0056b3; }
+        p { margin-top: 15px; font-size: 14px; color: #666; }
+        a { color: #007bff; text-decoration: none; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <div class="box">
+        <h2>Login</h2>
+        <input type="email" id="loginEmail" placeholder="Apni Email likhen">
+        <input type="password" id="loginPassword" placeholder="Password likhen">
+        <button id="loginBtn">Login</button>
+        <p>Account nahi hai? <a href="signup.html">Signup karen</a></p>
+    </div>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyCKZ9usjdA2l5U4q47y4hts2AdsTAtAzSs",
+            authDomain: "sec-auth-1f048.firebaseapp.com",
+            projectId: "sec-auth-1f048",
+            storageBucket: "sec-auth-1f048.firebasestorage.app",
+            messagingSenderId: "360719497179",
+            appId: "1:360719497179:web:c412d72187f2e1eed499fe"
+        };
+
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+
+        const loginBtn = document.getElementById('loginBtn');
+
+        loginBtn.addEventListener('click', () => {
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+
+            if (!email || !password) {
+                alert("Meharbani karke Email aur Password dono bharen!");
+                return;
+            }
+
+            firebase.auth().signInWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    alert("Login Successful! Redirecting...");
+                    window.location.replace("quiz.html");
+                })
+                .catch((error) => {
+                    alert("Galti: " + error.message);
+                });
+        });
+    </script>
+</body>
+</html>

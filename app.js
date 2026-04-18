@@ -1,206 +1,82 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
+import { getAuth } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyCKZ9usjdA2l5U4q47y4hts2AdsTAtAzSs",
+    authDomain: "sec-auth-1f048.firebaseapp.com",
+    databaseURL: "https://sec-auth-1f048-default-rtdb.firebaseio.com",
+    projectId: "sec-auth-1f048",
+    storageBucket: "sec-auth-1f048.firebasestorage.app",
+    messagingSenderId: "360719497179",
+    appId: "1:360719497179:web:c412d72187f2e1eed499fe"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+const auth = getAuth(app);
+
 const quizData = [
-    {
-        question: "JavaScript kis liye use hoti hai?",
-        a: "Sirf Styling ke liye",
-        b: "Webpages ko interactive banane ke liye",
-        c: "Database management ke liye",
-        d: "Sirf Layout banane ke liye",
-        correct: "b",
-    },
-    {
-        question: "CSS ka full form kya hai?",
-        a: "Central Style Sheets",
-        b: "Cascading Style Sheets",
-        c: "Cascading Simple Sheets",
-        d: "Cars SUVs Sailboats",
-        correct: "b",
-    },
-    {
-        question: "HTML mein sab se bari heading kaunsi hoti hai?",
-        a: "<h6>",
-        b: "<head>",
-        c: "<h1>",
-        d: " <heading>",
-        correct: "c",
-    },
-    {
-        question: "JavaScript mein variable banane ke liye kaunsa keyword use hota hai?",
-        a: "var",
-        b: "let",
-        c: "const",
-        d: "Upar diye gaye tamam (All of the above)",
-        correct: "d",
-    },
-    {
-        question: "Bootstrap kya hai?",
-        a: "Programming Language",
-        b: "CSS Framework",
-        c: "Browser ka naam",
-        d: "Operating System",
-        correct: "b",
-    },
-    {
-        question: "JavaScript mein alert box dikhane ke liye sahi syntax kya hai?",
-        a: "msg('Hello')",
-        b: "alert('Hello')",
-        c: "alertBox('Hello')",
-        d: "display('Hello')",
-        correct: "b",
-    },
-    {
-        question: "Variable 'name' ko declare karne ka sahi tariqa kya hai?",
-        a: "var name;",
-        b: "variable name;",
-        c: "v name;",
-        d: "str name;",
-        correct: "a",
-    },
-    {
-        question: "Variable name mein konsa special character allow hai?",
-        a: "Space ( )",
-        b: "Hyphen (-)",
-        c: "Underscore (_)",
-        d: "Asterisk (*)",
-        correct: "c",
-    },
-    {
-        question: "2 + 2 ka result agar string ho ('2' + 2), toh output kya hoga?",
-        a: "4",
-        b: "22",
-        c: "Error",
-        d: "NaN",
-        correct: "b",
-    },
-    {
-        question: "Prompt box se milne wali value by default kis type ki hoti hai?",
-        a: "Number",
-        b: "Boolean",
-        c: "String",
-        d: "Object",
-        correct: "c",
-    },
-    {
-        question: "Modulo operator (%) kya return karta hai?",
-        a: "Percentage",
-        b: "Division result",
-        c: "Remainder",
-        d: "Power",
-        correct: "c",
-    },
-    {
-        question: "If statement mein 'not equal' ke liye konsa symbol use hota hai?",
-        a: "!=",
-        b: "==",
-        c: "=",
-        d: "><",
-        correct: "a",
-    },
-    {
-        question: "Array ke aakhri element ko remove karne ke liye kya use hota hai?",
-        a: "shift()",
-        b: "push()",
-        c: "pop()",
-        d: "slice()",
-        correct: "c",
-    },
-    {
-        question: "Array ke shuru mein naya element add karne ke liye kya use karte hain?",
-        a: "push()",
-        b: "unshift()",
-        c: "pop()",
-        d: "splice()",
-        correct: "b",
-    },
-    {
-        question: "For loop mein 'i++' ka kya matlab hai?",
-        a: "i = i + 1",
-        b: "i = i - 1",
-        c: "i is positive",
-        d: "i multiply by 2",
-        correct: "a",
-    },
-    {
-        question: "Bootstrap kya hai?",
-        a: "Programming Language",
-        b: "CSS Framework",
-        c: "Browser ka naam",
-        d: "Operating System",
-        correct: "b",
-    },
-    {
-        question: "HTML file ki extension kya hoti hai?",
-        a: ".js",
-        b: ".css",
-        c: ".html",
-        d: ".txt",
-        correct: "c",
-    },
-    {
-        question: "JavaScript mein function banane ka sahi tarika kya hai?",
-        a: "function:myFunction()",
-        b: "function myFunction()",
-        c: "method myFunction()",
-        d: "create.myFunction()",
-        correct: "b",
-    }
+    { question: "JavaScript kis liye use hoti hai?", a: "Sirf Styling ke liye", b: "Webpages ko interactive banane ke liye", c: "Database management ke liye", d: "Sirf Layout banane ke liye", correct: "b" },
+    { question: "CSS ka full form kya hai?", a: "Central Style Sheets", b: "Cascading Style Sheets", c: "Cascading Simple Sheets", d: "Cars SUVs Sailboats", correct: "b" },
+    { question: "JavaScript mein variable banane ke liye kaunsa keyword use hota hai?", a: "var", b: "let", c: "const", d: "Upar diye gaye tamam (All of the above)", correct: "d" },
+    { question: "Bootstrap kya hai?", a: "Programming Language", b: "CSS Framework", c: "Browser ka naam", d: "Operating System", correct: "b" },
+    { question: "JavaScript mein alert box dikhane ke liye sahi syntax kya hai?", a: "msg('Hello')", b: "alert('Hello')", c: "alertBox('Hello')", d: "display('Hello')", correct: "b" }
 ];
 
-const quiz = document.getElementById('quiz');
-const answerEls = document.querySelectorAll('.answer');
-const questionEl = document.getElementById('question');
-const a_text = document.getElementById('a_text');
-const b_text = document.getElementById('b_text');
-const c_text = document.getElementById('c_text');
-const d_text = document.getElementById('d_text');
+const quizForm = document.getElementById('quiz-form');
 const submitBtn = document.getElementById('submit');
 
-let currentQuiz = 0;
-let score = 0;
-
-loadQuiz();
-
-function loadQuiz() {
-    deselectAnswers();
-    const currentQuizData = quizData[currentQuiz];
-
-    questionEl.innerText = currentQuizData.question;
-    a_text.innerText = currentQuizData.a;
-    b_text.innerText = currentQuizData.b;
-    c_text.innerText = currentQuizData.c;
-    d_text.innerText = currentQuizData.d;
-}
-
-function deselectAnswers() {
-    answerEls.forEach(answerEl => answerEl.checked = false);
-}
-
-function getSelected() {
-    let answer;
-    answerEls.forEach(answerEl => {
-        if(answerEl.checked) {
-            answer = answerEl.id;
-        }
+// Sare questions ek hi page par load karne ke liye
+function renderQuiz() {
+    let html = "";
+    quizData.forEach((item, index) => {
+        html += `
+            <div class="question-card">
+                <h3>${index + 1}. ${item.question}</h3>
+                <div class="options">
+                    <label><input type="radio" name="q${index}" value="a"> ${item.a}</label><br>
+                    <label><input type="radio" name="q${index}" value="b"> ${item.b}</label><br>
+                    <label><input type="radio" name="q${index}" value="c"> ${item.c}</label><br>
+                    <label><input type="radio" name="q${index}" value="d"> ${item.d}</label>
+                </div>
+            </div>
+        `;
     });
-    return answer;
+    quizForm.innerHTML = html;
+}
+
+async function saveToFirebase(correct, wrong) {
+    const user = auth.currentUser;
+    if (user) {
+        await set(ref(db, 'quiz_results/' + user.uid), {
+            correct: correct,
+            wrong: wrong,
+            email: user.email,
+            time: new Date().toLocaleString()
+        });
+    }
 }
 
 submitBtn.addEventListener('click', () => {
-    const answer = getSelected();
-    
-    if(answer) {
-        if(answer === quizData[currentQuiz].correct) {
+    let score = 0;
+    quizData.forEach((item, index) => {
+        const selected = document.querySelector(`input[name="q${index}"]:checked`);
+        if (selected && selected.value === item.correct) {
             score++;
         }
+    });
 
-        currentQuiz++;
+    let wrong = quizData.length - score;
+    saveToFirebase(score, wrong);
 
-        if(currentQuiz < quizData.length) {
-            loadQuiz();
-        } else {
-            quiz.innerHTML = `
-                <h2 style="padding: 2rem;">Aapne ${quizData.length} mein se ${score} sahi jawab diye!</h2>
-                <button onclick="location.reload()">Reload</button>
-            `;
-        }
-    }
+    document.querySelector('.quiz-container').innerHTML = `
+        <div style="text-align:center; padding: 40px;">
+            <h1 style="color:#673ab7">Response Submitted!</h1>
+            <p>Sahi Jawab: ${score} | Galat: ${wrong}</p>
+            <button onclick="location.reload()">Dobara Quiz Den</button>
+        </div>
+    `;
 });
+
+renderQuiz();
